@@ -8,6 +8,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [leaving, setLeaving] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,27 +17,30 @@ export default function LoginPage() {
     const u = getLocalUser();
     if (u && u.username === username && (!u.password || u.password === password)) {
       setToken("demo-token");
-      navigate("/");
+      setLeaving(true);
+      setTimeout(() => navigate("/"), 280);
       return;
     }
     // Фолбек: дозволити admin/admin для швидкого входу
     if (username === "admin" && password === "admin") {
       setToken("demo-token");
-      navigate("/");
+      setLeaving(true);
+      setTimeout(() => navigate("/"), 280);
       return;
     }
     // Остання спроба — бекенд
     try {
       const res = await authApi.login(username, password);
       setToken(res.access_token);
-      navigate("/");
+      setLeaving(true);
+      setTimeout(() => navigate("/"), 280);
     } catch (e: any) {
       setError(e.message || "Помилка входу");
     }
   };
 
   return (
-    <div className="rounded-2xl glass p-6 max-w-md mx-auto">
+    <div className={`rounded-2xl glass p-6 max-w-md mx-auto ${leaving ? "card-anim-leave" : "card-anim-shown"}`}>
       <h1 className="text-2xl font-bold mb-4">Вхід</h1>
       <form onSubmit={submit} className="space-y-3">
         <input

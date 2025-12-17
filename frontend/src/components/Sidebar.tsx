@@ -21,7 +21,8 @@ export default function Sidebar() {
           <Link
             key={c.id}
             to={`/?category=${c.slug}`}
-            className={`block px-3 py-2 rounded hover:bg-white/5 ${active === c.slug ? "bg-white/10" : ""}`}
+            className="nav-link-list"
+            data-active={active === c.slug}
           >
             {c.name}
           </Link>

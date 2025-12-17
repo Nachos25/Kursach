@@ -13,6 +13,94 @@
   backdrop-filter: blur(6px);
 }
 
+/* Навігаційний елемент з підкресленням (анімований) */
+.nav-link {
+  position: relative;
+  border-radius: 10px;
+  padding: 6px 12px;
+  transition: color 240ms ease, background-color 240ms ease, transform 240ms ease;
+}
+.nav-link:hover {
+  color: #fff;
+  background: rgba(124,156,255,0.12);
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms ease, background-color 300ms ease, opacity 300ms ease;
+  opacity: .9;
+}
+.nav-link[data-active="true"] {
+  background: rgba(124,156,255,0.10);
+  color: #fff;
+}
+.nav-link[data-active="true"]::after,
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Вариант для пунктів списку (бокове меню) */
+.nav-link-list {
+  position: relative;
+  display: block;
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: color 240ms ease, background-color 240ms ease;
+}
+.nav-link-list:hover {
+  background: rgba(255,255,255,0.05);
+}
+.nav-link-list::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+  height: 2px;
+  border-radius: 2px;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms ease, background-color 300ms ease, opacity 300ms ease;
+  opacity: .85;
+}
+.nav-link-list[data-active="true"] {
+  background: rgba(255,255,255,0.06);
+}
+.nav-link-list[data-active="true"]::after,
+.nav-link-list:hover::after {
+  transform: scaleX(1);
+}
+
+/* Анімація картки форми (логін/реєстрація) */
+.card-anim-enter {
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(1px);
+}
+.card-anim-enter-active,
+.card-anim-shown {
+  opacity: 1;
+  transform: translateY(0);
+  filter: none;
+  transition: opacity 280ms ease, transform 280ms ease, filter 280ms ease;
+}
+.card-anim-leave {
+  opacity: 0;
+  transform: translateY(-8px);
+  filter: blur(1px);
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 260ms ease, filter 260ms ease;
+}
+
 
 
 

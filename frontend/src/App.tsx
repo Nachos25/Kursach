@@ -4,6 +4,16 @@ import BrandRow from "./components/BrandRow";
 import Hero from "./components/Hero";
 import { getToken, logout } from "./lib/auth";
 
+function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
+  const location = useLocation();
+  const active = location.pathname === to || (to === "/" && location.pathname === "/");
+  return (
+    <Link to={to} className="nav-link" data-active={active}>
+      {children}
+    </Link>
+  );
+}
+
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,23 +32,19 @@ export default function App() {
             Perforator
           </Link>
 
-          <Link to="/" className={`px-3 py-1 rounded glass ${location.pathname === "/" ? "ring-1 ring-brand-600" : ""}`}>
-            Каталог
-          </Link>
+          <NavItem to="/">Каталог</NavItem>
 
           <div className="ml-auto flex items-center gap-2">
             {authed ? (
               <>
-                <Link to="/profile" className="px-3 py-1 rounded hover:bg-white/5">
-                  Профіль
-                </Link>
+                <NavItem to="/profile">Профіль</NavItem>
                 <button onClick={onLogout} className="px-3 py-1 rounded bg-brand-700 hover:bg-brand-600">
                   Вийти
                 </button>
               </>
             ) : (
               <>
-                <Link to="/login" className="px-3 py-1 rounded hover:bg-white/5">Увійти</Link>
+                <NavItem to="/login">Увійти</NavItem>
                 <Link to="/register" className="px-3 py-1 rounded bg-brand-700 hover:bg-brand-600">Реєстрація</Link>
               </>
             )}

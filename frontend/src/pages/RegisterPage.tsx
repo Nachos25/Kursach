@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [ok, setOk] = useState(false);
   const navigate = useNavigate();
+  const [leaving, setLeaving] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,11 +22,12 @@ export default function RegisterPage() {
     }
     setLocalUser({ username, fullName, password });
     setToken("demo-token");
-    navigate("/");
+    setLeaving(true);
+    setTimeout(() => navigate("/"), 280);
   };
 
   return (
-    <div className="rounded-2xl glass p-6 max-w-md mx-auto">
+    <div className={`rounded-2xl glass p-6 max-w-md mx-auto ${leaving ? "card-anim-leave" : "card-anim-shown"}`}>
       <h1 className="text-2xl font-bold mb-4">Реєстрація</h1>
       <form onSubmit={submit} className="space-y-3">
         <input
