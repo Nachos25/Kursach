@@ -15,7 +15,11 @@ type Product = {
 
 export default function ProductCard({ p }: { p: Product }) {
   const finalPrice = Math.round(p.price * (1 - p.discount_percent / 100) * 100) / 100;
-  const src = p.image_url ? `${API_BASE}/proxy?url=${encodeURIComponent(p.image_url)}` : undefined;
+  const src = p.image_url
+    ? (p.image_url.startsWith("http")
+        ? `${API_BASE}/proxy?url=${encodeURIComponent(p.image_url)}`
+        : `${API_BASE}/images/${encodeURIComponent(p.image_url)}`)
+    : undefined;
   return (
     <Link to={`/product/${p.slug}`} className="rounded-2xl glass p-4 block hover:bg-white/10">
       <div className="aspect-[4/3] rounded-xl bg-neutral-900 mb-3 overflow-hidden flex items-center justify-center">

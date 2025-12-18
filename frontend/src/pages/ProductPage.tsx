@@ -13,7 +13,11 @@ export default function ProductPage() {
   if (!p) return <div className="rounded-xl glass p-6">Завантаження...</div>;
 
   const finalPrice = Math.round(p.price * (1 - p.discount_percent / 100) * 100) / 100;
-  const src = p.image_url ? `${API_BASE}/proxy?url=${encodeURIComponent(p.image_url)}` : undefined;
+  const src = p.image_url
+    ? (p.image_url.startsWith("http")
+        ? `${API_BASE}/proxy?url=${encodeURIComponent(p.image_url)}`
+        : `${API_BASE}/images/${encodeURIComponent(p.image_url)}`)
+    : undefined;
   return (
     <div className="rounded-2xl glass p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="aspect-square rounded-xl bg-neutral-900 overflow-hidden">
